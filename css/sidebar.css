@@ -1,0 +1,105 @@
+body {
+    background-color: #1d6eb1;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f3f4f5;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    height: 200vh;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li.active,
+.sidebar ul li:hover {
+    background-color: #00aaff;
+    color: white;
+}
+
+.content {
+    padding: 20px;
+    background-color: #1d6eb1;
+    width: 100%;
+}
+
+.content-item {
+    display: none;
+}
+
+.content-item.active {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.container-ativo {
+    border-radius: 5px;
+    padding: 16px 20px;
+    box-sizing: border-box;
+}
+.accordion {
+    border-bottom: 1px solid #d9e2ec;
+    margin-bottom: 10px;
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 15px;
+    background-color: #1e81b0; /* Mesmo tom de azul */
+    color: #fff;
+    border: none;
+    outline: none;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-header:hover {
+    background-color: #166e99;
+}
+
+.accordion-body {
+    padding: 15px;
+    display: none;
+    background-color: #eef1f7;
+    color: #333;
+}
+
+.accordion-body p {
+    margin: 0;
+}
+
+.accordion .arrow {
+    transition: transform 0.3s ease;
+}
+
+.accordion.active .arrow {
+    transform: rotate(180deg);
+}

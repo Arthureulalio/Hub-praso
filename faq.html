@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="src/styles/styles.css">
+    <title>Accordion Financeiro</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000; /* Fundo preto para as laterais */
+            position: relative;
+        }
+
+        .faq-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #166e99; /* Cor amarela para destaque */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .content-wrapper {
+            width: 100%;
+            max-width: 800px;
+            background-color: #1e81b0; /* Fundo azul para o conteúdo */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            text-align: center;
+        }
+
+        .finance-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .accordion {
+            border-bottom: 1px solid #d9e2ec;
+            margin-bottom: 10px;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 15px;
+            background-color: #1e81b0; /* Mesmo tom de azul */
+            color: #fff;
+            border: none;
+            outline: none;
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: #166e99;
+        }
+
+        .accordion-body {
+            padding: 15px;
+            display: none;
+            background-color: #eef1f7;
+            color: #333;
+        }
+
+        .accordion-body p {
+            margin: 0;
+        }
+
+        .accordion .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Faixas amarelas nos cantos esquerdo e direito */
+        .background::before,
+        .background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 15%;
+            height: 100%;
+            background-color: #166e99; /* Cor amarela */
+            z-index: 0;
+        }
+
+        .background::before {
+            left: 0;
+        }
+
+        .background::after {
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="faq-title">FAQ</div>
+    <div class="content-wrapper">
+        <div class="finance-title">Financeiro</div>
+        <div class="accordion">
+            <button class="accordion-header">
+                <span>Como a Praso realiza a emissão de Nota Fiscal (NFe)?</span>
+                <i class="fa-solid fa-chevron-down arrow"></i>
+            </button>
+            <div class="accordion-body">
+                <p>Aqui na Praso, trabalhamos com dois tipos de emissão de notas fiscais: nota de venda e nota de devolução. Na nota fiscal de venda, informamos ao cliente e à Sefaz (Secretaria da Fazenda) que os produtos foram vendidos pela Praso para aquele cliente. A nota fiscal de venda é emitida automaticamente quando o pedido é feito.
+
+                    A nota fiscal de devolução informa ao cliente e à Sefaz que o cliente não recebeu aqueles itens. Ela é emitida automaticamente quando alguma ocorrência é realizada. 
+                    
+                    Para a Praso, a importância da emissão e registro dessas notas vai além do setor fiscal. Utilizamos essas notas não apenas para registro fiscal e cobrança, mas também para organizar o nosso Centro de Distribuição, conseguindo mapear os itens que saíram e voltaram para o nosso armazém.
+                    
+                    Sempre que um item sai do nosso CD, uma nota fiscal de venda é emitida. Ainda não trabalhamos com notas de bonificação.
+                    
+                    Caso seja necessário emitir uma nota fiscal de venda ou devolução manualmente, nós fazemos isso no Sankhya.</p>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <button class="accordion-header">
+                <span>Como cancelar uma nota fiscal de venda ?</span>
+                <i class="fa-solid fa-chevron-down arrow"></i>
+            </button>
+            <div class="accordion-body">
+                <p>Primeiro, precisamos entender o motivo do cancelamento da nota fiscal. Atualmente, a Sefaz permite que a nota fiscal de venda ou de devolução seja cancelada em até 24 horas; depois desse prazo, não é mais permitido o cancelamento.
+
+                    Caso seja uma nota fiscal de venda, se ultrapassar as 24 horas, podemos emitir uma nota de devolução para que aquela operação de venda seja anulada.
+                    
+                    Se o cliente ainda insistir na anulação, precisaremos de ajuda do time financeiro para que eles possam dar entrada em uma anulação junto à Sefaz com justificativa. Esse tipo de operação não deve ser feito com frequência, devendo ocorrer apenas em casos excepcionais. Por isso, é importante alinhar com o cliente e buscar outras formas de resolução para evitar recorrer a essa solução.</p>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <button class="accordion-header">
+                <span>Como cancelar uma nota fiscal de devolução ?</span>
+                <i class="fa-solid fa-chevron-down arrow"></i>
+            </button>
+            <div class="accordion-body">
+                <p>Primeiro, precisamos entender o motivo do cancelamento da nota fiscal. Atualmente, a Sefaz permite que a nota fiscal de venda ou de devolução seja cancelada em até 24 horas; depois desse prazo, não é mais permitido o cancelamento.
+
+                    Podemos pensar em outras formas de resolver ao invés de cancelar. A operação contrária à nota de devolução seria a nota fiscal de venda, mas dependendo do motivo pelo qual o cliente deseja cancelar, essa solução pode não funcionar.
+                    
+                    Se o cliente ainda insistir na anulação, precisaremos de ajuda do time financeiro para que eles possam dar entrada em uma anulação junto à Sefaz com justificativa. Esse tipo de operação não deve ser feito com frequência, devendo ocorrer apenas em casos excepcionais. Por isso, é importante alinhar com o cliente e buscar outras formas de resolução para evitar recorrer a essa solução.</p>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <button class="accordion-header">
+                <span>O que devo fazer se o cliente informar que ele emite a própria nota de devolução?</span>
+                <i class="fa-solid fa-chevron-down arrow"></i>
+            </button>
+            <div class="accordion-body">
+                <p>É importante explicar ao cliente nosso procedimento padrão para que ele compreenda o processo. Temos clientes de diferentes portes, com rotatividade nas equipes de compras e financeiro, e às vezes é necessário relembrar nosso processo.
+
+                    Diante disso, se o cliente emitiu uma nota de devolução para um item que não recebeu, precisamos verificar internamente se o motorista registrou a ocorrência no sistema. Se o motorista tiver registrado a ocorrência, há uma grande chance de que ela já tenha sido resolvida de forma automática ou pelo time da torre de controle.
+                    
+                    - Caso o pedido esteja em rota hoje e o motorista ainda não tenha registrado a ocorrência, devemos confirmar com a torre de controle se realmente houve a falta e alinhar sobre a ocorrência. Se for confirmado, iremos realizar o procedimento manual.
+                    
+                    Nesse caso, não registraremos a ocorrência no Retool. Explicaremos sobre a nota de devolução no Shopify, anexaremos o PDF da nota e colocaremos a tag "*devolucao_emitida_pelo_cliente*".
+                    
+                    É importante registrar e armazenar essa nota para que o time financeiro possa acessá-la.
+                    
+                    - Se a ocorrência já foi resolvida automaticamente ou pelo time da torre de controle em menos de 24 horas, iremos realizar o cancelamento da ocorrência. Se for um reenvio, cancelaremos o reenvio do item e a nota de devolução emitida automaticamente.
+                    
+                    Após isso, registraremos o ocorrido no Shopify, anexaremos a nota emitida pelo cliente em PDF e colocaremos a tag "*devolucao_emitida_pelo_cliente*".
+                    
+                    Se a ocorrência foi registrada há mais de 24 horas, é importante informar ao cliente que, devido ao tempo decorrido, a nota não pode mais ser cancelada. Caso a nota dele também tenha sido emitida há mais de 24 horas e ele se recuse a cancelar a nota de devolução emitida, precisamos entrar em contato com o setor financeiro, explicando a situação e solicitando a anulação da nossa nota. Lembrando de registrar o ocorrido no Shopify, anexar a nota emitida pelo cliente em PDF e colocar a tag "*devolucao_emitida_pelo_cliente*".</p>
+            </div>
+        </div>
+    </div>
+  <script src="js/accordion.js"></script>
+</body>
+</html>
