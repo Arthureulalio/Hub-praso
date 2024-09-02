@@ -197,6 +197,8 @@
             <li onclick="showContent('cancelamento')">Cancelamento</li> <!-- Novo botão para Cancelamento -->
             <li onclick="showContent('baixa-comprovante')">Baixa de Comprovante</li> <!-- Novo botão para Baixa de Comprovante -->
             <li onclick="showContent('avaria')">Avaria</li> <!-- Novo botão para Avaria -->
+            <li onclick="showContent('credito')">Crédito</li>
+
         </ul>
     </div>
 
@@ -1608,6 +1610,97 @@
             Tempo de tratativa estimado: 10 minutos.
         </div>
     </div>
+    <div id="credito" class="content content-item">
+        <div class="header">
+            <img src="images/logopraso1.png" alt="Logo Praso">
+            <small>Atualizado no dia 08/08/2024</small>
+        </div>
+    
+        <div class="status-entrega">
+            <h1>Crédito</h1>
+        </div>
+    
+        <div class="checklist">
+            <h2>Quando usar:</h2>
+            <ul>
+                <li>Quando o cliente solicitar aumento de crédito, aumento de prazo para pagamento ou liberação de cartão de crédito.</li>
+            </ul>
+    
+            <h2>Checklist de Atendimento:</h2>
+            <ul>
+                <li>Dar aceite no caso através do Omni Channel - SalesForce.</li>
+                <li>Saudação inicial.</li>
+                <li>Confirmar solicitação do cliente.</li>
+                <li>Tabular com status fechado, motivo Pagamento e tipo Crédito.</li>
+                <li>Registrar as informações no Shopify.</li>
+            </ul>
+        </div>
+    
+        <div class="menu-atendimento">
+            <h2>Menu de Atendimento:</h2>
+            <table>
+                <tr>
+                    <th>Tipo de Problema</th>
+                </tr>
+                <tr>
+                    <td><a href="#">Liberar cartão de crédito</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#">Aumento de limite</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#">Aumento do prazo</a></td>
+                </tr>
+            </table>
+        </div>
+    
+        <div class="step">
+            <h2>Crédito</h2>
+            <div class="attention">
+                <p>Cliente CPF não tem a modalidade de boleto, somente PIX e cartão de crédito.</p>
+            </div>
+        
+            <div style="padding: 10px; border: 2px solid #0033cc; border-radius: 5px; margin-bottom: 15px;">
+                <h3 style="background-color: #0033cc; color: white; text-align: center; padding: 10px; border-radius: 5px 5px 0 0;">LIMITE</h3>
+                <p style="background-color: #E6E6FA; padding: 15px; color: #333;">
+                    Orientar o cliente a preencher o <a href="#">formulário</a> e aguardar prazo de 48h, para análise. Caso o mesmo reporte alguma dificuldade, abrir o fluxo no canal crédito-suporte para fazer a solicitação e aguardar o retorno para passar a resolutiva ao cliente.
+                </p>
+            </div>
+        
+            <div style="padding: 10px; border: 2px solid #0033cc; border-radius: 5px; margin-bottom: 15px;">
+                <h3 style="background-color: #0033cc; color: white; text-align: center; padding: 10px; border-radius: 5px 5px 0 0;">PRAZO</h3>
+                <p style="background-color: #E6E6FA; padding: 15px; color: #333;">
+                    Consultar no Shopify. Se o cliente tiver o histórico de compras igual ou superior a R$7.000, abrir o fluxo no canal crédito-suporte para fazer a solicitação e aguardar retorno para passar a resolutiva ao cliente.
+                </p>
+            </div>
+        
+            <div style="padding: 10px; border: 2px solid #0033cc; border-radius: 5px;">
+                <h3 style="background-color: #0033cc; color: white; text-align: center; padding: 10px; border-radius: 5px 5px 0 0;">CARTÃO DE CRÉDITO</h3>
+                <p style="background-color: #E6E6FA; padding: 15px; color: #333;">
+                    Clientes CPF e CNPJ devem ter a modalidade de cartão de crédito liberada, estando indisponível, abrir o fluxo no canal crédito-suporte para liberação e aguardar retorno para passar a resolutiva ao cliente.
+                </p>
+            </div>
+        
+            <div class="checklist-final">
+                <h2>Checklist do atendimento.</h2>
+                <ul>
+                    <li>Finalizar atendimento no SalesForce com a tabulação: Pagamento>Crédito.</li>
+                </ul>
+            </div>
+        </div>
+        
+    
+        <div class="checklist-final">
+            <h2>Checklist do atendimento.</h2>
+            <ul>
+                <li>Finalizar atendimento no SalesForce com a tabulação: Pagamento>Crédito.</li>
+            </ul>
+            <div class="footer">
+                Tempo de tratativa estimado: 7 minutos
+            </div>
+        </div>
+    </div>
+    
 </div>
 </div>
 
