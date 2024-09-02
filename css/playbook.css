@@ -1,0 +1,178 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.container {
+    display: flex;
+    width: 100%;
+}
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    color: black;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+.sidebar ul li {
+    margin: 15px 0;
+}
+.sidebar ul li a, .sidebar ul li {
+    color: #800080; /* Cor do link */
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+.sidebar ul li.active {
+    background-color: #4B0082; /* Cor de fundo ativa */
+    padding: 10px;
+    border-radius: 5px;
+    color: white; /* Cor do texto ativo */
+}
+.sidebar ul li:hover {
+    background-color: #6A0DAD; /* Cor de fundo ao passar o mouse */
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+}
+.content {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+}
+.header {
+    background-color: #1f55f8;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+.header img {
+    max-width: 700px;
+}
+.header small {
+    display: block;
+    color: #e0e0e0;
+    margin-top: 5px;
+}
+.status-entrega {
+    text-align: center;
+    margin-top: 20px;
+}
+.status-entrega h1 {
+    font-size: 24px;
+    margin: 20px 0;
+}
+.checklist, .menu-atendimento {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+.checklist h2, .menu-atendimento h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.checklist ul {
+    list-style: none;
+    padding-left: 20px;
+}
+.checklist ul li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+.menu-atendimento table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.menu-atendimento th, .menu-atendimento td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+.menu-atendimento th {
+    background-color: #0033cc;
+    color: white;
+}
+.menu-atendimento td a {
+    color: #0033cc;
+    text-decoration: none;
+    font-weight: bold;
+}
+.menu-atendimento td a:hover {
+    text-decoration: underline;
+}
+.step {
+    margin-top: 20px;
+}
+.step h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+.step table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.step th, .step td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+.step th {
+    background-color: #0033cc;
+    color: white;
+}
+.step .yes {
+    background-color: #0033cc;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+.step .no {
+    background-color: #FF0000;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+.step .info {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}
+.attention {
+    color: #FF0000;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+.checklist-final {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+    font-size: 18px;
+}
+.footer {
+    font-size: 16px;
+    margin-top: 10px;
+    text-align: right;
+    font-style: italic;
+}
+.footer img {
+    max-width: 100px;
+    float: right;
+}

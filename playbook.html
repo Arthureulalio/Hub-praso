@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status de Entrega e Reembolso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #f4f4f4;
+            color: black;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 15px 0;
+            cursor: pointer;
+        }
+        .sidebar ul li.active {
+            background-color: #4B0082; /* Cor de fundo ativa */
+            padding: 10px;
+            border-radius: 5px;
+            color: white; /* Cor do texto ativo */
+        }
+        .sidebar ul li:hover {
+            background-color: #6A0DAD; /* Cor de fundo ao passar o mouse */
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+        .content {
+            background-color: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            display: none;
+        }
+        .content.active {
+            display: block;
+        }
+        .header {
+            background-color: #2556eb;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+        .header img {
+            max-width: 150px;
+        }
+        .header small {
+            display: block;
+            color: #e0e0e0;
+            margin-top: 5px;
+        }
+        .status-entrega {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .status-entrega h1 {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .checklist, .menu-atendimento {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .checklist h2, .menu-atendimento h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .checklist ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        .checklist ul li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .menu-atendimento table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .menu-atendimento th, .menu-atendimento td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .menu-atendimento th {
+            background-color: #0033cc;
+            color: white;
+        }
+        .menu-atendimento td a {
+            color: #0033cc;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .menu-atendimento td a:hover {
+            text-decoration: underline;
+        }
+        .step {
+            margin-top: 20px;
+        }
+        .step h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .step table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .step th, .step td {
+            padding: 15px;
+            text-align: center; /* Centraliza horizontalmente */
+            vertical-align: middle; /* Centraliza verticalmente */
+            border: 1px solid #ddd;
+            width: 50%; /* Define largura igual para ambas as colunas */
+        }
+        .step td.yes {
+            background-color: #0033cc; /* Cor azul para 'Sim' */
+            color: white;
+            font-weight: bold;
+        }
+        .step td.no {
+            background-color: #FF0000; /* Cor vermelha para 'Não' */
+            color: white;
+            font-weight: bold;
+        }
+
+        .step .info {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .attention {
+            color: #FF0000;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+        }
+        .checklist-final {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .footer {
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: right;
+            font-style: italic;
+        }
+        .footer img {
+            max-width: 100px;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="sidebar">
+        <ul>
+            <li><a href="index.html">Home</a></li> <!-- Botão Home redireciona para outra página -->
+            <li onclick="showContent('status-entrega')" class="active">Status de entrega</li>
+            <li onclick="showContent('falta-produto')">Falta de produto</li>
+            <li onclick="showContent('reembolso')">Reembolso</li>
+            <li onclick="showContent('logistico')">Logístico</li>
+            <li onclick="showContent('assinatura-desconhecida')">Assinatura desconhecida</li>
+            <li onclick="showContent('alteracao-dados')">Alteração de dados</li>
+            <li onclick="showContent('produto-incorreto')">Produto incorreto</li>
+            <li onclick="showContent('cancelamento')">Cancelamento</li> <!-- Novo botão para Cancelamento -->
+            <li onclick="showContent('baixa-comprovante')">Baixa de Comprovante</li> <!-- Novo botão para Baixa de Comprovante -->
+            <li onclick="showContent('avaria')">Avaria</li> <!-- Novo botão para Avaria -->
+        </ul>
+    </div>
+
+    <div id="status-entrega" class="content content-item active">
+        <div class="header">
+            <img src="images/logopraso1.png" alt="Logo Praso">
+            <small>Atualizado no dia 08/08/2024</small>
+        </div>
+
+        <div class="status-entrega">
+            <h1>Status de entrega</h1>
+        </div>
+
+        <div class="checklist">
+            <h2>Quando usar:</h2>
+            <ul>
+                <li>Utilizar quando o cliente questiona se o pedido está em rota.</li>
+                <li>Cliente informa que o pedido está atrasado.</li>
+            </ul>
+
+            <h2>Checklist de Atendimento:</h2>
+            <ul>
+                <li>Dar aceite no caso através do Omni Channel - SalesForce.</li>
+                <li>Saudação inicial.</li>
+                <li>Confirmar solicitação do cliente através das informações fornecidas.</li>
+                <li>Consultar status do pedido nas respectivas ferramentas.</li>
+                <li>Passar as devidas informações para o cliente e se certificar se precisa de ajuda com alguma outra nova solicitação.</li>
+                <li>Tabular com status <em>fechado</em>, motivo <em>pedido</em> e tipo <em>status de entrega</em>.</li>
+            </ul>
+        </div>
+
+        <div class="menu-atendimento">
+            <h2>Menu de Atendimento:</h2>
+            <table>
+                <tr>
+                    <th>Tipo de Problema</th>
+                </tr>
+                <tr>
+                    <td><a href="#">Pedido em rota</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#">Falha na entrega</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#">Pedido atrasado</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>1. Cliente questiona se o pedido já está em rota?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Consultar no Shopify os pedidos recentes com o delivery_date programado para o dia em questão.</li>
+                            <li>Entrega do dia, sem atraso, seguir para o <strong>Passo 2</strong>.</li>
+                            <li>Pedido se encontra em atraso, seguir para o <strong>Passo 5</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Solicitar informações necessárias para a análise.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>2. Existe pedido programado para o dia?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Checar no Fusion a confirmação da rota (<a href="#">vídeo</a>) e utilizar macro #entrega-não-atrasada.</li>
+                            <li>Seguir para o <strong>Passo 6</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Orientar o cliente a aguardar a data programada para o pedido em questão e finalizar atendimento.</li>
+                            <li>Seguir para o <strong>Passo 6</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="attention">
+            Atenção para alguns motivos de “Falha na entrega”
+        </div>
+        <div class="step info">
+            <ul>
+                <li>Caso motorista tenha realizado a baixa no período inicial da rota, abrir fluxo no slack no canal sync-atendimento-torredecontrole para ser verificado melhor o que aconteceu e a possibilidade do retorno do entregador responsável.</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h2>3. Pedido está com status de “Falha na entrega” ou “Entregue com sucesso”?</h2>
+            <table>
+                <tr>
+                    <td class="yes">FALHA NA ENTREGA<br><small>“Estabelecimento fechado”, “Falta de tempo hábil”...</small></td>
+                    <td class="no">ENTREGUE COM SUCESSO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Checar se houve o reenvio de forma automática pelo Retool>Adicionar Ocorrências.</li>
+                            <li>Seguir para o <strong>Passo 4</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Direcionar canhoto e validar se cliente reconhece, caso não, seguir fluxo Não reconhece assinatura do canhoto.</li>
+                            <li>Cliente reconhece assinatura. Seguir para o <strong>Passo 6</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>4. A ocorrência foi realizada automaticamente?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Passar o novo prazo de entrega ao cliente, com a macro #reenvio-pedido.</li>
+                            <li>Seguir para o <strong>Passo 6</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Checar no Retool>Adicionar Ocorrências, se temos os itens disponíveis e se o cliente aceita o reenvio para a data mais próxima. Sugestão de macro #reenvio- pedido. Caso não, seguir fluxo de “Cancelamento”.</li>
+                            <li>Seguir para o <strong>Passo 6</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>5. O pedido se encontra em atraso?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Utilizar macro #entrega-em-atraso e caso o cliente sinalize que tem restrição de horário, abrir um fluxo no slack no canal sync-atendimento-torredecontrole.</li>
+                            <li>Seguir para o <strong>Passo 6</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Seguir para o <strong>Passo 1</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="checklist-final">
+            <h2>6. Checklist do atendimento.</h2>
+            <ul>
+                <li>Finalizar atendimento no SalesForce com a tabulação: Pedido>Status de entrega e com o #PRS correspondente.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            Tempo de tratativa estimado: 7 minutos
+            <img src="images/logopraso1.png" alt="Logo Praso">
+        </div>
+    </div>
+
+    <div id="falta-produto" class="content content-item">
+        <div class="header">
+            <h1>Falta de produto</h1>
+        </div>
+
+        <div class="step">
+            <h2>1. É uma entrega que está em rota hoje?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Verificar no Fusion (vídeo) se o motorista notificou a ocorrência.</li>
+                            <li>Seguir para o <strong>Passo 2</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Seguir para o <strong>Passo 4</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>2. Motorista colocou a ocorrência ou tem alguma observação no canhoto?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Confirmação de ocorrência? Seguir para o <strong>Passo 6</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Abrir fluxo para verificar o que ocorreu.</li>
+                            <li>Seguir para o <strong>Passo 3</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>3. Produto ficou no carro?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Reenvio manual no Retool.</li>
+                            <li>Seguir para o <strong>Passo 6</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Checar se o cliente possui ocorrências e se deseja realizar novo envio.</li>
+                            <li>Seguir para o <strong>Passo 4</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>4. Pedido dentro do prazo de 7 dias?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Verificar no Fusion se há observação.</li>
+                            <li>Seguir para o <strong>Passo 5</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Utilizar a macro #7dias-excedido.</li>
+                            <li>Seguir para o <strong>Passo 6</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>5. Motorista colocou a ocorrência ou consta observação no canhoto?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Retornar ao <strong>Passo 2</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Checar histórico e utilizar macro de reenvio.</li>
+                            <li>Seguir para o <strong>Passo 6</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="checklist-final">
+            <h2>6. Checklist do atendimento:</h2>
+            <ul>
+                <li>Registrar informações no Shopify.</li>
+                <li>Finalizar atendimento no SalesForce.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            Tempo de tratativa estimado: 7 minutos
+            <img src="logo.png" alt="Logo Praso">
+        </div>
+    </div>
+
+    <div id="reembolso" class="content content-item">
+        <div class="header">
+            <h1>Reembolso</h1>
+        </div>
+
+        <div class="attention">
+            <p>Atenção:</p>
+            <p>Em casos de cancelamento total do pedido, o reembolso ocorre de forma automática. Motivo do cancelamento ser “Pagamento recusado”, significa que o pagamento não foi efetuado.</p>
+        </div>
+
+        <div class="step">
+            <h2>1. Pagamento foi realizado em pix?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Checar no Shopify se há ocorrência, caso não, se certificar no Fusion(vídeo).</li>
+                            <li>Seguir para o <strong>Passo 2</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Conferir no Shopify, o método de pagamento e seguir o fluxo correspondente.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>2. Ocorrência foi notificada?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Verificar no cronograma do pedido no Shopify, se há algum registro de reembolso ou a confirmação de status de entrega. Seguir para o <strong>Passo 3</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Seguir fluxo de Falta de item ou Entrega não realizada.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>3. Reembolso foi efetuado?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Utilizar macro #reembolso-pix.</li>
+                            <li>Seguir para o <strong>Passo 5</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Questionar se o cliente aceita um cupom no valor correspondente ou o reembolso diretamente em sua conta bancária.</li>
+                            <li>Seguir para o <strong>Passo 4</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Pagamento foi realizado no cartão?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Checar no Shopify se há ocorrência, caso não, se certificar no Fusion(vídeo).</li>
+                            <li>Seguir para o <strong>Passo 2</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Conferir no Shopify, o método de pagamento e seguir o fluxo correspondente.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Ocorrência foi notificada?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Verificar no cronograma do pedido no Shopify, se há algum registro de reembolso ou a confirmação de status de entrega. Seguir para o <strong>Passo 3</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Seguir fluxo de Falta de item ou Não reconhece a assinatura do canhoto.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Reembolso foi efetuado?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Utilizar macro #reembolso-cartao.</li>
+                            <li>Seguir para o <strong>Passo 5</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Questionar se o cliente aceita um cupom no valor correspondente ou o reembolso diretamente em sua conta bancária.</li>
+                            <li>Seguir para o <strong>Passo 4</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Pagamento foi realizado no boleto?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Checar no Shopify se há ocorrência, caso não, se certificar no Fusion(vídeo).</li>
+                            <li>Seguir para o <strong>Passo 2</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Conferir no Shopify, o método de pagamento e seguir o fluxo correspondente.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Ocorrência foi notificada?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Verificar no cronograma do pedido no Shopify, se há algum registro de reembolso ou a confirmação de status de entrega. Seguir para o <strong>Passo 3</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Seguir fluxo de Falta de item ou Entrega não realizada.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Reembolso foi efetuado?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Utilizar macro #reembolso-boleto.</li>
+                            <li>Seguir para o <strong>Passo 5</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Questionar se o cliente aceita um cupom no valor correspondente ou o reembolso diretamente em sua conta bancária.</li>
+                            <li>Seguir para o <strong>Passo 4</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Cliente aceita cupom?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Gerar descontos pelo Shopify na aba “Descontos” (vídeo) e utilizar macro #cupom.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Solicitar a Chave Pix e informar que o reembolso será processado diretamente para a conta bancária do cliente. Utilize a macro #reembolso-pix-boleto.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="checklist-final">
+            <h2>5. Checklist do atendimento.</h2>
+            <ul>
+                <li>Registrar informações no Shopify.</li>
+                <li>Finalizar atendimento no SalesForce com a tabulação: Pagamento>Reembolso e com o #PRS correspondente.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            Tempo de tratativa estimado: 7 minutos
+        </div>
+    </div>
+
+    <div id="logistico" class="content content-item">
+        <div class="header">
+            <h1>Logístico</h1>
+        </div>
+
+        <div class="checklist">
+            <h2>Quando usar:</h2>
+            <ul>
+                <li>Quando o cliente informa que a gramatura do produto recebido está divergente da nota fiscal.</li>
+            </ul>
+            <h2>Checklist de Atendimento:</h2>
+            <ul>
+                <li>Dar aceite no caso através do Omni Channel - SalesForce.</li>
+                <li>Saudação inicial.</li>
+                <li>Confirmar solicitação do cliente.</li>
+                <li>Pedir uma foto nítida que possamos identificar o item, sobre a balança com gramatura em evidência.</li>
+                <li>Tabular com status fechado, motivo Pedido e tipo Peso incorreto.</li>
+                <li>Registrar as informações no Shopify.</li>
+            </ul>
+        </div>
+
+        <div class="menu-atendimento">
+            <h2>Menu de Atendimento:</h2>
+            <table>
+                <tr>
+                    <th>Tipo de Problema</th>
+                </tr>
+                <tr>
+                    <td><a href="#">Gramatura Incorreta</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>1. Cliente se refere a gramatura ou quantidade?</h2>
+            <table>
+                <tr>
+                    <td class="yes">GRAMATURA</td>
+                    <td class="no">QUANTIDADE</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Pedir uma foto nítida que possamos identificar o item, sobre a balança com gramatura em evidência. Após o recebimento da foto, pelo Retool > consultar pedido, checar se coincide com a nota fiscal.</li>
+                            <li>Seguir para o <strong>Passo 2</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Seguir o fluxo de Falta de item.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="attention">
+            <p>Atenção:</p>
+            <p>Caso cliente não possua foto e não consta registro no canhoto ou ocorrência do entregador responsável (vídeo), não seguir com tratativa.</p>
+            <p>Pedido precisa estar dentro do prazo de 7 dias a partir da data de entrega.</p>
+            <p>Em alguns itens congelados, que são vendidos por unidades, é aceitável ocorrer uma variação na gramatura de 20% devido ao gelo, exceto esse caso, atuamos com um campo para referenciar a divergência. Exemplo de produto: peixes.</p>
+        </div>
+
+        <div class="step">
+            <h2>2. A gramatura recebida, está divergente da nota fiscal?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Realizar o ajuste de pesagem pela planilha e, depois, atualizar no salesforce.</li>
+                            <li>Seguir para o <strong>Passo 3</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Caso seja um item que vendem por unidade, seguir um macro #frio-unidade.</li>
+                            <li>Seguir para o <strong>Passo 5</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>3. A nota fiscal está no prazo de 24h?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Fazer o cancelamento e gerar uma nova nota pelo Sankhya (vídeo).</li>
+                            <li>Seguir para o <strong>Passo 4</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Gerar uma nova nota devolutiva referente à gramatura faltante pelo Sankhya (vídeo).</li>
+                            <li>Seguir para o <strong>Passo 4</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>4. O pedido já consta com o boleto pago?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Em casos de pedido pago seguir fluxo de Reembolso.</li>
+                            <li>Seguir para o <strong>Passo 5</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Pelo Retool > Emissor de boletos, atualizar o boleto e enviá-lo para o cliente.</li>
+                            <li>Seguir para o <strong>Passo 5</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="attention">
+            <p>Atenção:</p>
+            <p>Caso boleto não estiver sendo gerado, consultar nas respectivas planilhas se o cliente é: CREDIX (clique aqui) ou CASH-U (clique aqui) e solicitar a atualização no slack pelo canal correspondente ext-prazo-cash-u-support ou ext-prazo-support-credix.</p>
+        </div>
+
+        <div class="checklist-final">
+            <h2>5. Checklist do atendimento.</h2>
+            <ul>
+                <li>Registrar informações no Shopify com a evidência enviada pelo cliente.</li>
+                <li>Finalizar atendimento no SalesForce com a tabulação: Pedido>Peso incorreto e com o #PRS correspondente.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            Tempo de tratativa estimado: 15 minutos
+        </div>
+    </div>
+
+    <div id="cancelamento" class="content content-item">
+        <div class="header">
+            <h1>Cancelamento</h1>
+            <small>Atualizado no dia 15/08/2024</small>
+        </div>
+
+        <div class="checklist">
+            <h2>Quando usar:</h2>
+            <ul>
+                <li>Quando o cliente solicitar o cancelamento do pedido ou item que não foi entregue.</li>
+            </ul>
+
+            <h2>Checklist de Atendimento:</h2>
+            <ul>
+                <li>Dar aceite no caso através do Omni Channel - SalesForce.</li>
+                <li>Saudação inicial.</li>
+                <li>Confirmar solicitação do cliente.</li>
+                <li>Entender com o cliente o porquê do cancelamento.</li>
+                <li>Verificar se o pedido está faturado no retool via consultar pedidos.</li>
+                <li>Tabular com status fechado, motivo pedido e de tipo Cancelamento.</li>
+                <li>Registrar as informações no shopify.</li>
+            </ul>
+        </div>
+
+        <div class="menu-atendimento">
+            <h2>Menu de Atendimento:</h2>
+            <table>
+                <tr>
+                    <th>Tipo de Problema</th>
+                </tr>
+                <tr>
+                    <td><a href="#">Cancelamento total</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#">Cancelamento parcial</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="attention">
+            <p>Atenção:</p>
+            <p>Se o motivo do cancelamento for “Pagamento recusado”, significa que o pagamento não foi efetuado, ou seja, pedido não foi faturado.</p>
+            <p>Em casos de pedidos não faturados, sempre realizar o cancelamento pelo Retool>Consultar pedidos e não pelo Shopify.</p>
+            <p>Sempre que se tratar de pedidos realizados no mesmo dia e que não foram faturados ainda, orientar o próprio cliente a realizar a ação através da sua conta pelo app ou site.</p>
+        </div>
+
+        <div class="step">
+            <h2>1. Pedido está em rota?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Abrir um fluxo no Slack, canal sync-atendimento-torredecontrole, motivo cancelamento do pedido e só após a confirmação da suspensão da rota, fazer o cancelamento pelo Retool > Adicionar Ocorrências.</li>
+                            <li>Seguir passo 3.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Checar no Fusion se de fato o pedido não foi faturado e confirmar no Retool > Adicionar Ocorrências, realizar o cancelamento pelo Retool > Adicionar Ocorrências.</li>
+                            <li>Seguir passo 3.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <!-- Adicione esta estrutura na parte relevante do código -->
+<div class="step">
+    <h2>Cancelamento Parcial</h2>
+    <table>
+        <tr>
+            <td class="yes">2. A rota ainda está em aberto?</td>
+        </tr>
+        <tr>
+            <td class="info">
+                <div style="background-color: #f5f5f5; padding: 10px; border: 1px solid #ccc;">
+                    <div style="background-color: #e0e0e0; padding: 10px;">
+                        <p><strong>SIM</strong></p>
+                        <ul>
+                            <li>Abrir um fluxo no Slack, canal sync-atendimento-torredecontrole e só após a autorização, fazer o cancelamento do item pelo Retool > Adicionar Ocorrências.</li>
+                        </ul>
+                        <ul>
+                            <li>Seguir passo 3</li>
+                        </ul>
+                    </div>
+                    <div style="background-color: #fbe9e7; padding: 10px; margin-top: 10px;">
+                        <p><strong>NÃO</strong></p>
+                        <ul>
+                            <li>Verificar no Fusion (vídeo) se há ocorrência ou observações na história do pedido e após confirmação, fazer o cancelamento do item pelo Retool > Adicionar Ocorrências.</li>
+                            <li>Se for pedido do dia ou não tenha notificação no canal, ir em Ocorrências não justificadas nos últimos 7 dias e verificar pelo histórico, caso tenha histórico, utilizar macro #cancelamento-item-negado.</li>
+                            <li>Seguir passo 3</li>
+                        </ul>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="checklist-final">
+    </div>
+    <div class="footer">
+        Tempo de tratativa estimado: 5 minutos (variando de acordo com o tempo de retorno da logística).
+    </div>
+</div>
+
+        </div>
+
+        <div class="step">
+            <h2>2. A rota ainda está em aberto?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Abrir um fluxo no Slack, canal sync-atendimento-torredecontrole e só após a autorização, fazer o cancelamento do item pelo Retool > Adicionar Ocorrências.</li>
+                            <li>Seguir passo 3.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Verificar no Fusion (vídeo) se há ocorrência ou observações na história do pedido e após confirmação, fazer o cancelamento do item pelo Retool > Adicionar Ocorrências.</li>
+                            <li>Se for pedido do dia ou não tenha notificação no canal, ir em Ocorrências não justificadas nos últimos 7 dias e verificar pelo histórico, caso tenha histórico, utilizar macro #cancelamento-item-negado.</li>
+                            <li>Seguir passo 3.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="checklist-final">
+            <h2>3. Checklist do atendimento.</h2>
+            <ul>
+                <li>Registrar sempre o motivo do cancelamento no Shopify com detalhes e especificações.</li>
+                <li>Finalizar atendimento no SalesForce com a tabulação: Pedido>Cancelamento.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            Tempo de tratativa estimado: 5 minutos (variando de acordo com o tempo de retorno da logística).
+        </div>
+    </div>
+
+    <div id="assinatura-desconhecida" class="content content-item">
+        <div class="header">
+            <h1>Cliente Não Reconhece a Assinatura do Canhoto</h1>
+            <small>Atualizado no dia 08/09/2024</small>
+        </div>
+
+        <div class="checklist">
+            <h2>Quando usar:</h2>
+            <ul>
+                <li>Quando o cliente informar que não recebeu o pedido ou não reconhece a assinatura do canhoto.</li>
+            </ul>
+            <h2>Checklist de Atendimento:</h2>
+            <ul>
+                <li>Dar aceite no caso através do Omni Channel - SalesForce.</li>
+                <li>Saudação inicial.</li>
+                <li>Confirmar solicitação do cliente.</li>
+                <li>Abrir o site do Fusion e encontrar o canhoto referente ao pedido que o cliente estiver solicitando na aba 3.5.</li>
+                <li>Tabular com status fechado, tipo pedido e o motivo não reconhece a assinatura do canhoto.</li>
+                <li>Registrar as informações no Shopify.</li>
+            </ul>
+        </div>
+
+        <div class="menu-atendimento">
+            <h2>Menu de Atendimento:</h2>
+            <table>
+                <tr>
+                    <th>Tipo de Problema</th>
+                </tr>
+                <tr>
+                    <td><a href="#">Não reconhece a assinatura do canhoto.</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>1. Canhoto coincide com a Nota Fiscal?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Baixar o canhoto no Fusion (vídeo) e mandar para o cliente checar se ele reconhece.</li>
+                            <li>Seguir para o <strong>Passo 2</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Abrir um ticket com o motivo “De olho no motorista” no slack, pelo canal sync-atendimento-torredecontrole.</li>
+                            <li>Seguir para o <strong>Passo 3</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>2. Cliente reconhece assinatura?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Utilizar a macro #canhoto-confirmado.</li>
+                            <li>Seguir para o <strong>Passo 4</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Validar se a assinatura coincide com as 4 últimas pedidos. Caso não, seguir para o passo 3.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>3. Cliente aceita reenvio do pedido?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Seguir com o envio de forma manual no Retool > Adicionar Ocorrências e utilizar a macro #reenvio-pedido.</li>
+                            <li>Seguir para o <strong>Passo 4</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Seguir fluxo de cancelamento e abrir um ticket com o motivo “De olho no motorista” no slack, pelo canal sync-atendimento-torredecontrole.</li>
+                            <li>Seguir para o <strong>Passo 4</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="attention">
+            <p>Atenção:</p>
+            <ul>
+                <li>Casos mais antigos de entregas confirmadas com boleto atrasado e cliente quer realizar negociação, abrir um fluxo no Slack pelo canal cobrança-atendimento.</li>
+                <li>Quando o canhoto coincidir com a Nota Fiscal, mas a assinatura não corresponder com o do cliente, além de registrar no cronograma do Shopify, atape fraudes canhoto. Também inserir o PRS em “Ocorrências não justificadas”.</li>
+            </ul>
+        </div>
+
+        <div class="checklist-final">
+            <h2>4. Checklist do atendimento.</h2>
+            <ul>
+                <li>Registrar informações no Shopify.</li>
+                <li>Finalizar atendimento no SalesForce com a tabulação: Pedido> Não Reconhece Assinatura do canhoto e com o #PRS correspondente.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            Tempo de tratativa estimado: 10 minutos
+        </div>
+    </div>
+
+    <div id="alteracao-dados" class="content content-item">
+        <div class="header">
+            <h1>Alteração de Dados</h1>
+            <small>Atualizado no dia 12/09/2024</small>
+        </div>
+
+        <div class="checklist">
+            <h2>Quando usar:</h2>
+            <ul>
+                <li>Quando o cliente solicitar alterar qualquer informação de seu cadastro.</li>
+            </ul>
+            <h2>Checklist de Atendimento:</h2>
+            <ul>
+                <li>Dar aceite no caso através do Omni Channel - SalesForce.</li>
+                <li>Saudação inicial.</li>
+                <li>Confirmar solicitação do cliente.</li>
+                <li>Fazer alterações apenas após uma análise rigorosa no intuito de evitar possíveis fraudes.</li>
+                <li>Tabular com Status fechado, motivo geral e tipo alteração de Dados.</li>
+                <li>Registrar as informações no Shopify.</li>
+            </ul>
+        </div>
+
+        <div class="menu-atendimento">
+            <h2>Menu de Atendimento:</h2>
+            <table>
+                <tr>
+                    <th>Tipo de Problema</th>
+                </tr>
+                <tr>
+                    <td><a href="#">Alterar e-mail</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#">Alterar número</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#">Alterar Endereço</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Alteração de Dados (e-mail/telefone)</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Realizar a troca através de contato do cliente no Shopify e inserir uma observação na linha de tempo com os detalhes da troca.</li>
+                            <li>Seguir passo 3.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Perguntar se cliente fez a troca do telefone e e-mail que facilitou a Receita Federal, seguir com os dados registrados.</li>
+                            <li>Seguir para o Passo 2</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Cliente tem acesso ao e-mail e/ou telefone cadastrado para confirmação de alteração?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Enviar um e-mail para o cliente através de seu e-mail anterior, solicitando validação através de um código gerado. Após a confirmação, fazer a alteração pelo Shopify.</li>
+                            <li>Seguir passo 3.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Não há site da Receita Federal e outros sites de consulta.</li>
+                            <li>Seguir com a solicitação da CNJP do cliente e gerar uma nova assinatura digital, mas verificar se houve a possível troca dos dados registrados. Caso necessário, ative o PRS.</li>
+                            <li>Seguir passo 3.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Alteração de Dados (endereço)</h2>
+            <p>Atenção:</p>
+            <ul>
+                <li>O novo endereço não aparecerá no Shopify e essa ação não é realizada por lá, e sim, através do link de alteração de endereço.</li>
+                <li>Se os dados do CNPJ estiverem vinculados a outro Estado, não fazer a alteração de Endereço.</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h2>O novo endereço informado é o mesmo que consta no site da Receita Federal?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Realizar a alteração através desse link. Basta inserir o CNPJ ou CPF do cliente, acessar a conta do cliente e editar os dados.</li>
+                            <li>Seguir passo 3.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Solicitar o comprovante de residência no nome do titular da conta e fazer validação através do e-mail do cliente. Somente após confirmação de dados, iniciar a alteração no Shopify. Seguir para passo 3.</li>
+                            <li>Se o cliente não mandar o comprovante, informar-lhe a impossibilidade de alteração de endereço e finalizar o atendimento. Caso necessário, ative o PRS.</li>
+                            <li>Seguir passo 3.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="checklist-final">
+            <h2>Checklist do atendimento.</h2>
+            <ul>
+                <li>Registrar informações no Shopify, com o anexo das evidências que comprovam a autenticidade dos dados validados, baseando-se no que consta na Receita Federal.</li>
+                <li>Finalizar atendimento no SalesForce com a tabulação: Geral>Alteração de Dados.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            Tempo de tratativa estimado: 17 minutos
+        </div>
+    </div>
+
+    <div id="produto-incorreto" class="content content-item">
+        <div class="header">
+            <h1>Produto incorreto</h1>
+            <small>Atualizado no dia 15/09/2024</small>
+        </div>
+
+        <div class="checklist">
+            <h2>Quando usar:</h2>
+            <ul>
+                <li>Quando o cliente informar que foi entregue o produto incorreto.</li>
+            </ul>
+            <h2>Checklist de Atendimento:</h2>
+            <ul>
+                <li>Dar aceite no caso através do Omni Channel - SalesForce.</li>
+                <li>Saudação inicial.</li>
+                <li>Confirmar solicitação do cliente.</li>
+                <li>Solicitar uma imagem do suposto item incorreto ao cliente.</li>
+                <li>Verificar se o fato o item está incorreto no shopify</li>
+                <li>Tabular com status fechado, motivo pedido e tipo produto incorreto.</li>
+                <li>Registrar as informações no shopify.</li>
+            </ul>
+        </div>
+
+        <div class="menu-atendimento">
+            <h2>Menu de Atendimento:</h2>
+            <table>
+                <tr>
+                    <th>Tipo de Problema</th>
+                </tr>
+                <tr>
+                    <td><a href="#">Produto entregue está incorreto</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>1. O produto entregue é divergente do que consta na NF?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Agendar coleta do produto incorreto no Retool>Coleta e verificar se temos estoque do item correto com Retool>Adicionar ocorrências para remover o item. Seguir para o <strong>Passo 2</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Informe ao cliente que o pedido entregue está correto, pois o item divergiu na nota fiscal. Seguir para o <strong>Passo 2</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>2. Cliente consumiu o produto incorreto ou deseja ficar com o item?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Atualizar o pedido anterior em Retool>Adicionar ocorrências, realizar novo faturamento no item recebido, para faturamento no novo pedido utilizando a macro #entrega-frio-incorreto.</li>
+                            <li>Seguir para o <strong>Passo 3</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Retomar ao <strong>Passo 1</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="checklist-final">
+            <h2>3. Checklist do atendimento.</h2>
+            <ul>
+                <li>Registrar informações no Shopify com anexo do produto incorretamente.</li>
+                <li>Finalizar atendimento no SalesForce com a tabulação: Pedido>Produto incorreto e com o #PRS correspondente.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            Tempo de tratativa estimado: 12 minutos
+        </div>
+    </div>
+    <div id="baixa-comprovante" class="content content-item">
+        <div class="header">
+            <img src="images/logopraso1.png" alt="Logo Praso">
+            <small>Atualizado no dia 08/08/2024</small>
+        </div>
+    
+        <div class="status-entrega">
+            <h1>Baixa de Comprovante</h1>
+        </div>
+    
+        <div class="checklist">
+            <h2>Quando usar:</h2>
+            <ul>
+                <li>O cliente informa que o site está bloqueado para realizar novas compras devido a um pagamento pendente.</li>
+                <li>Cliente deseja restabelecer o seu limite para efetuar uma nova compra.</li>
+            </ul>
+    
+            <h2>Checklist de Atendimento:</h2>
+            <ul>
+                <li>Dar aceite no caso através do Omni Channel - SalesForce.</li>
+                <li>Saudação inicial.</li>
+                <li>Confirmar solicitação do cliente.</li>
+                <li>Validar a veracidade do comprovante enviado (ver próxima página).</li>
+                <li>Baixar manualmente o comprovante.</li>
+                <li>Tabular com status fechado, motivo Pagamento e tipo Baixa de Comprovante (quando houver a ação de baixa ou comprovação via Retool) ou tipo Confirmar pagamento (quando não houver ação de baixa).</li>
+                <li>Registrar as informações no Shopify.</li>
+            </ul>
+        </div>
+    
+        <div class="menu-atendimento">
+            <h2>Menu de Atendimento:</h2>
+            <table>
+                <tr>
+                    <th>Tipo de Problema</th>
+                </tr>
+                <tr>
+                    <td><a href="#">Checklist Comprovante</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#">Comprovante de Pagamento</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#">Atraso na Compensação</a></td>
+                </tr>
+            </table>
+        </div>
+    
+        <div class="step">
+            <h2>Comprovante de Pagamento</h2>
+            <!-- Adicione o conteúdo e estrutura que for necessário para refletir as imagens -->
+            <!-- Aqui adicione a estrutura HTML conforme a imagem fornecida -->
+            <div class="attention">
+                Atenção:
+                <ul>
+                    <li>Em caso de pagamento realizado para parceiros, observar os dados para identificar as semelhanças entre boleto e pagamento. Exemplo: [comprovante de parceiro]</li>
+                    <li>Para consultar pagamentos da Credix, clique aqui.</li>
+                    <li>Confirmado o pagamento, será necessário marcar como PAGO no pedido através do Shopify.</li>
+                </ul>
+            </div>
+            <!-- Continue com a estrutura das imagens -->
+        </div>
+    
+        <!-- Outras seções podem ser adicionadas aqui -->
+        
+        <div class="footer">
+            Tempo de tratativa estimado: 7 minutos
+            <img src="logo.png" alt="Logo Praso">
+        </div>
+    </div>
+    <div id="avaria" class="content content-item">
+        <div class="header">
+            <img src="images/logopraso1.png" alt="Logo Praso">
+            <small>Atualizado no dia 08/08/2024</small>
+        </div>
+
+        <div class="status-entrega">
+            <h1>Avaria</h1>
+        </div>
+
+        <div class="checklist">
+            <h2>Quando usar:</h2>
+            <ul>
+                <li>Cliente informa que recebeu algum produto danificado ou com qualidade comprometida.</li>
+                <li>Relata que o item chegou com a data de validade crítica.</li>
+            </ul>
+
+            <h2>Checklist de Atendimento:</h2>
+            <ul>
+                <li>Dar aceite no caso através do Omni Channel - SalesForce.</li>
+                <li>Saudação inicial.</li>
+                <li>Confirmar solicitação do cliente.</li>
+                <li>Solicitar uma foto nítida do produto para que possamos identificar a avaria e nos casos de data de validade crítica, o vencimento do produto e lote precisam ficar em evidência.</li>
+                <li>Tabular com status fechado, motivo Pedido e tipo Avaria.</li>
+                <li>Registrar as informações no Shopify.</li>
+            </ul>
+        </div>
+
+        <div class="menu-atendimento">
+            <h2>Menu de Atendimento:</h2>
+            <table>
+                <tr>
+                    <th>Tipo de Problema</th>
+                </tr>
+                <tr>
+                    <td><a href="#">Avaria do produto</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#">Validade crítica</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Avaria no produto</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Verificar se está no prazo de 7 dias após o recebimento.</li>
+                            <li>Seguir para o <strong>Passo 2</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Solicitar mais evidências que sejam necessárias para prosseguir com a tratativa.</li>
+                            <li>Seguir para o <strong>Passo 3</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h2>Está dentro do prazo de 7 dias?</h2>
+            <table>
+                <tr>
+                    <td class="yes">SIM</td>
+                    <td class="no">NÃO</td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <ul>
+                            <li>Encaminhar o item avariado para um novo envio manual no Retool>Adicionar Ocorrências e utilizar a macro #avaria-item-reenvio.</li>
+                            <li>Seguir para o <strong>Passo 3</strong>.</li>
+                        </ul>
+                    </td>
+                    <td class="info">
+                        <ul>
+                            <li>Verificar se o item já foi utilizado e se há outras alternativas para compensação do cliente.</li>
+                            <li>Seguir para o <strong>Passo 3</strong>.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="attention">
+            <p>Atenção:</p>
+            <ul>
+                <li>Em casos de cancelamento de pedidos devido a avarias, seguir o fluxo correspondente.</li>
+                <li>Verificar se o item enviado como reenvio também apresenta avarias e notificar o responsável.</li>
+            </ul>
+        </div>
+
+        <div class="checklist-final">
+            <h2>Checklist do atendimento:</h2>
+            <ul>
+                <li>Registrar informações no Shopify.</li>
+                <li>Finalizar atendimento no SalesForce com a tabulação: Pedido>Avaria do produto e com o #PRS correspondente.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            Tempo de tratativa estimado: 10 minutos.
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    function showContent(contentId) {
+        document.querySelectorAll('.content-item').forEach(function(content) {
+            content.classList.remove('active');
+        });
+        document.querySelectorAll('.sidebar ul li').forEach(function(item) {
+            item.classList.remove('active');
+        });
+
+        document.getElementById(contentId).classList.add('active');
+
+        document.querySelector(`.sidebar ul li[onclick="showContent('${contentId}')"]`).classList.add('active');
+    } 
+</script>
+
+</body>
+</html>

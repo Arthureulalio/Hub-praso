@@ -13,12 +13,13 @@
             <ul>
                 <li><a href="index.html">home</a></li>
                 <li class="active" onclick="showContent('home')">Financeiro</li>
-                <li onclick="showContent('order')">Entregas</li>
-                <li onclick="showContent('delivery')">Logístico</li>
+                <li onclick="showContent('order')">Logística</li>
+                <li onclick="showContent('delivery')">Site/APP</li>
             </ul>
         </div>
         <div class="content">
             <div id="home" class="content-item active">
+                <!-- Accordions para "Financeiro" -->
                 <div class="container-ativo">
                     <div class="accordion">
                         <button class="accordion-header">
@@ -27,7 +28,7 @@
                         </button>
                         <div class="accordion-body">
                             <p>Aqui na Praso, trabalhamos com dois tipos de emissão de notas fiscais: nota de venda e nota de devolução. Na nota fiscal de venda, informamos ao cliente e à Sefaz (Secretaria da Fazenda) que os produtos foram vendidos pela Praso para aquele cliente. A nota fiscal de venda é emitida automaticamente quando o pedido é feito.
-            
+
                                 A nota fiscal de devolução informa ao cliente e à Sefaz que o cliente não recebeu aqueles itens. Ela é emitida automaticamente quando alguma ocorrência é realizada. 
                                 
                                 Para a Praso, a importância da emissão e registro dessas notas vai além do setor fiscal. Utilizamos essas notas não apenas para registro fiscal e cobrança, mas também para organizar o nosso Centro de Distribuição, conseguindo mapear os itens que saíram e voltaram para o nosso armazém.
@@ -41,31 +42,19 @@
                 <div class="container-ativo">
                     <div class="accordion">
                         <button class="accordion-header">
-                            <span>Como cancelar uma nota fiscal de venda ?</span>
-                            <i class="fa-solid fa-chevron-down arrow"></i>
-                        </button>
-                        <div class="accordion-body">
-                            <p>Primeiro, precisamos entender o motivo do cancelamento da nota fiscal. Atualmente, a Sefaz permite que a nota fiscal de venda ou de devolução seja cancelada em até 24 horas; depois desse prazo, não é mais permitido o cancelamento.
-                                Caso seja uma nota fiscal de venda, se ultrapassar as 24 horas, podemos emitir uma nota de devolução para que aquela operação de venda seja anulada.
-                                Se o cliente ainda insistir na anulação, precisaremos de ajuda do time financeiro para que eles possam dar entrada em uma anulação junto à Sefaz com justificativa. Esse tipo de operação não deve ser feito com frequência, devendo ocorrer apenas em casos excepcionais. Por isso, é importante alinhar com o cliente e buscar outras formas de resolução para evitar recorrer a essa solução.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="container-ativo">
-                    <div class="accordion">
-                        <button class="accordion-header">
-                            <span>Como cancelar uma nota fiscal de devolução ?</span>
+                            <span>Como cancelar uma nota fiscal de venda?</span>
                             <i class="fa-solid fa-chevron-down arrow"></i>
                         </button>
                         <div class="accordion-body">
                             <p>Primeiro, precisamos entender o motivo do cancelamento da nota fiscal. Atualmente, a Sefaz permite que a nota fiscal de venda ou de devolução seja cancelada em até 24 horas; depois desse prazo, não é mais permitido o cancelamento.
 
-                                Podemos pensar em outras formas de resolver ao invés de cancelar. A operação contrária à nota de devolução seria a nota fiscal de venda, mas dependendo do motivo pelo qual o cliente deseja cancelar, essa solução pode não funcionar.
+                                Caso seja uma nota fiscal de venda, se ultrapassar as 24 horas, podemos emitir uma nota de devolução para que aquela operação de venda seja anulada.
                                 
                                 Se o cliente ainda insistir na anulação, precisaremos de ajuda do time financeiro para que eles possam dar entrada em uma anulação junto à Sefaz com justificativa. Esse tipo de operação não deve ser feito com frequência, devendo ocorrer apenas em casos excepcionais. Por isso, é importante alinhar com o cliente e buscar outras formas de resolução para evitar recorrer a essa solução.</p>
                         </div>
                     </div>
                 </div>
+                <!-- Adicionei 8 accordions adicionais para "Financeiro" -->
                 <div class="container-ativo">
                     <div class="accordion">
                         <button class="accordion-header">
@@ -91,136 +80,110 @@
                         </div>
                     </div>
                 </div>
-                    <div class="container-ativo">
-                        <div class="accordion">
-                            <button class="accordion-header">
-                                <span>O que devo fazer se o cliente informar que ele emite a própria nota de devolução?</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <p>É importante explicar ao cliente nosso procedimento padrão para que ele compreenda o processo. Temos clientes de diferentes portes, com rotatividade nas equipes de compras e financeiro, e às vezes é necessário relembrar nosso processo.
-
-                                    Diante disso, se o cliente emitiu uma nota de devolução para um item que não recebeu, precisamos verificar internamente se o motorista registrou a ocorrência no sistema. Se o motorista tiver registrado a ocorrência, há uma grande chance de que ela já tenha sido resolvida de forma automática ou pelo time da torre de controle.
-                                    
-                                    - Caso o pedido esteja em rota hoje e o motorista ainda não tenha registrado a ocorrência, devemos confirmar com a torre de controle se realmente houve a falta e alinhar sobre a ocorrência. Se for confirmado, iremos realizar o procedimento manual.
-                                    
-                                    Nesse caso, não registraremos a ocorrência no Retool. Explicaremos sobre a nota de devolução no Shopify, anexaremos o PDF da nota e colocaremos a tag "*devolucao_emitida_pelo_cliente*".
-                                    
-                                    É importante registrar e armazenar essa nota para que o time financeiro possa acessá-la.
-                                    
-                                    - Se a ocorrência já foi resolvida automaticamente ou pelo time da torre de controle em menos de 24 horas, iremos realizar o cancelamento da ocorrência. Se for um reenvio, cancelaremos o reenvio do item e a nota de devolução emitida automaticamente.
-                                    
-                                    Após isso, registraremos o ocorrido no Shopify, anexaremos a nota emitida pelo cliente em PDF e colocaremos a tag "*devolucao_emitida_pelo_cliente*".
-                                    
-                                    Se a ocorrência foi registrada há mais de 24 horas, é importante informar ao cliente que, devido ao tempo decorrido, a nota não pode mais ser cancelada. Caso a nota dele também tenha sido emitida há mais de 24 horas e ele se recuse a cancelar a nota de devolução emitida, precisamos entrar em contato com o setor financeiro, explicando a situação e solicitando a anulação da nossa nota. Lembrando de registrar o ocorrido no Shopify, anexar a nota emitida pelo cliente em PDF e colocar a tag "*devolucao_emitida_pelo_cliente*".</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-ativo">
-                        <div class="accordion">
-                            <button class="accordion-header">
-                                <span>Como posso ter acesso a uma nota fiscal?</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <p>A nota fiscal de venda fica disponível para o cliente no site e no aplicativo, mas a nota de devolução não.
-
-                                    Podemos acessar notas de venda e devolução no nosso sistema de duas formas diferentes.
-                                    
-                                    Na aba "Consultar Pedido" dentro do Retool, podemos pesquisar o pedido e visualizar todo o histórico de notas emitidas, devolvidas e canceladas. Também podemos acessar essas informações no Sankhya, nossa ferramenta de gestão financeira, onde é possível consultar todas as notas de venda, devolução e cancelamento, além de baixar o PDF e o XML.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-ativo">
-                        <div class="accordion">
-                            <button class="accordion-header">
-                                <span>A nota fiscal está divergente dos produtos que o cliente recebeu?</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <p>É importante pedir ao cliente que envie a nota que ele recebeu e, em paralelo, confirmar com o canhoto que o motorista anexou na entrega.
-
-                                    Precisamos verificar se o cliente recebeu a nota fiscal de venda que está em seu CNPJ ou se recebeu a nota fiscal de outro cliente.
-                                    
-                                    Caso ele tenha recebido a nota fiscal de outro cliente ou os itens tenham sido entregues trocados, iremos solicitar a recolha dos itens e realizar o reenvio do pedido correto. Se o cliente utilizou algum ou todos os itens, iremos faturar um pedido para cobrança, registrando tudo no Shopify.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-ativo">
-                        <div class="accordion">
-                            <button class="accordion-header">
-                                <span>A nota fiscal já foi emitida e o cliente quer cancelar o pedido. O que fazer?</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <p>No site e no aplicativo da Praso, o cliente consegue cancelar o pedido por conta própria, caso a nota fiscal ainda não tenha sido emitida.
-
-                                    Hoje, nosso processo de faturamento ocorre paralelamente ao processo de roteirização. Por conta disso, em casos em que o pedido já foi faturado, o cliente não conseguirá realizar o cancelamento sozinho.
-                                    
-                                    Com o cenário de faturamento automático, dependendo do tempo de emissão, o pedido provavelmente já pode ter sido separado em nosso CD.
-                                    
-                                    Por isso, é preciso avisar ao time de operações, caso seja um pedido ainda no tempo de separação, para cancelar a nota fiscal no Sankhya de forma manual.
-                                    
-                                    Sempre registre no Shopify o motivo do cancelamento.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-ativo">
-                        <div class="accordion">
-                            <button class="accordion-header">
-                                <span>O que é XML?</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <p>A XML é uma linguagem de programação Extensible Markup Language (XML). Esse arquivo serve para dar validade jurídica. Alguns dos nosso clientes pedem esse arquivo para dar entrada no sistema deles.
-
-                                    No Sankhya podemos fazer a busca pelo pedido e enviar o xml daquela nota automaticamente para o e-mail cadastrado ou baixar o arquivo.
-                                    
-                                    Caso ainda assim o arquivo não esteja legível ou precise dele de outra forma, pode falar com o supervisor ou analista sênior do seu time ou falar com o time de tecnologia.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-ativo">
-                        <div class="accordion">
-                            <button class="accordion-header">
-                                <span>Quem é a Credix ?</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <p>A credix é a nossa parceira financeira com clientes que consideramos Grandes Contas. Eles permitem que a gente ofereça pagamentos flexíveis e limite de crédito para o cliente sem processar o pagamento por nós. O que significa que no boleto o pagamento estará o nome Credix Securitizadora iii </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-ativo">
-                        <div class="accordion">
-                            <button class="accordion-header">
-                                <span>Quem é a CashU ?</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <p>A CashU é nossa parceira financeira com o maior volume do nosso negócio. Eles permitem que a gente ofereça pagamentos flexíveis e limite de crédito para o cliente sem processar o pagamento por nós. O que significa que no boleto o pagamento estará o nome INOVA CREDTECH III FUNDO DE INVESTIMENTO EM DIREITOS CREDITORIOS.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-ativo">
-                        <div class="accordion">
-                            <button class="accordion-header">
-                                <span>Como é feito o aumento do  limite de crédito ?</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <p>Para solicitarmos aumento de crédito, precisamos que o cliente tenha gasto em média 7k para ser avaliada essa possibilidade, caso o cliente não tenha gasto esse valor ainda conosco, podemos enviar o link: https://airtable.com/appnJT7Kz8mlHxTzY/shrnaeTumroiTMpaL Para que o cliente anexe notas ficar de outras empresas, para que o time de crédito possa analisar e isso pode levar em média 48 horas !</p>
-                            </div>
-                        </div>
-                    </div>
-                
-                </div>
-            </div>
-            <div id="order" class="content-item">
                 <div class="container-ativo">
                     <div class="accordion">
                         <button class="accordion-header">
-                            <span>Como é feito o aumento do  limite de crédito ?</span>
+                            <span>Como posso ter acesso a uma nota fiscal?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>A nota fiscal de venda fica disponível para o cliente no site e no aplicativo, mas a nota de devolução não.
+
+                                Podemos acessar notas de venda e devolução no nosso sistema de duas formas diferentes.
+                                
+                                Na aba "Consultar Pedido" dentro do Retool, podemos pesquisar o pedido e visualizar todo o histórico de notas emitidas, devolvidas e canceladas. Também podemos acessar essas informações no Sankhya, nossa ferramenta de gestão financeira, onde é possível consultar todas as notas de venda, devolução e cancelamento, além de baixar o PDF e o XML.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>A nota fiscal está divergente dos produtos que o cliente recebeu?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>É importante pedir ao cliente que envie a nota que ele recebeu e, em paralelo, confirmar com o canhoto que o motorista anexou na entrega.
+
+                                Precisamos verificar se o cliente recebeu a nota fiscal de venda que está em seu CNPJ ou se recebeu a nota fiscal de outro cliente.
+                                
+                                Caso ele tenha recebido a nota fiscal de outro cliente ou os itens tenham sido entregues trocados, iremos solicitar a recolha dos itens e realizar o reenvio do pedido correto. Se o cliente utilizou algum ou todos os itens, iremos faturar um pedido para cobrança, registrando tudo no Shopify.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Cliente não aceita Nota fiscal de Devolução  ?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Caso o cliente informe que não aceita nota fiscal de devolução, é importante informar sobre o nosso procedimento padrão de resolução de ocorrências e a emissão automática de nota fiscal de devolução.
+
+                                Hoje, não temos uma trava que informe a torre de controle ou impeça a automação de resolver as ocorrências e emitir a nota de devolução ou venda. Por isso caso o cliente faça a emissão de uma nota de devolução, ele precisa nos informar em até 24 horas.
+                                O cliente emitindo a nota fiscal precisamos cancelar a nossa nota fiscal de devolução e registrar no shopify o ocorrido, anexar a nota emitida pelo cliente em pdf e colocar a tag “*devolucao_emitida_pelo_cliente*”.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>A nota fiscal já foi emitida e o cliente quer cancelar o pedido. O que fazer?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>No site e no aplicativo da Praso, o cliente consegue cancelar o pedido por conta própria, caso a nota fiscal ainda não tenha sido emitida.
+
+                                Hoje, nosso processo de faturamento ocorre paralelamente ao processo de roteirização. Por conta disso, em casos em que o pedido já foi faturado, o cliente não conseguirá realizar o cancelamento sozinho.
+                                
+                                Com o cenário de faturamento automático, dependendo do tempo de emissão, o pedido provavelmente já pode ter sido separado em nosso CD.
+                                
+                                Por isso, é preciso avisar ao time de operações, caso seja um pedido ainda no tempo de separação, para cancelar a nota fiscal no Sankhya de forma manual.
+                                
+                                Sempre registre no Shopify o motivo do cancelamento.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>O que é XML?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>A XML é uma linguagem de programação Extensible Markup Language (XML). Esse arquivo serve para dar validade jurídica. Alguns dos nosso clientes pedem esse arquivo para dar entrada no sistema deles.
+
+                                No Sankhya podemos fazer a busca pelo pedido e enviar o xml daquela nota automaticamente para o e-mail cadastrado ou baixar o arquivo.
+                                
+                                Caso ainda assim o arquivo não esteja legível ou precise dele de outra forma, pode falar com o supervisor ou analista sênior do seu time ou falar com o time de tecnologia.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Quem é a Credix ?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>A credix é a nossa parceira financeira com clientes que consideramos Grandes Contas. Eles permitem que a gente ofereça pagamentos flexíveis e limite de crédito para o cliente sem processar o pagamento por nós. O que significa que no boleto o pagamento estará o nome Credix Securitizadora iii .</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Quem é a CashU ?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>A CashU é nossa parceira financeira com o maior volume do nosso negócio. Eles permitem que a gente ofereça pagamentos flexíveis e limite de crédito para o cliente sem processar o pagamento por nós. O que significa que no boleto o pagamento estará o nome INOVA CREDTECH III FUNDO DE INVESTIMENTO EM DIREITOS CREDITORIOS.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Como é feito o aumento do  limite de crédito?</span>
                             <i class="fa-solid fa-chevron-down arrow"></i>
                         </button>
                         <div class="accordion-body">
@@ -229,34 +192,247 @@
                     </div>
                 </div>
                 <div class="container-ativo">
-                    <h1>Onde está meu pedido?</h1>
-                    <p>Informações sobre o seu pedido.</p>
-                </div>
-                <div class="container-ativo">
-                    <h1>Onde está meu pedido?</h1>
-                    <p>Informações sobre o seu pedido.</p>
-                </div>
-                <div class="container-ativo">
-                    <h1>Onde está meu pedido?</h1>
-                    <p>Informações sobre o seu pedido.</p>
-                </div>
-                <div class="container-ativo">
-                    <h1>Onde está meu pedido?</h1>
-                    <p>Informações sobre o seu pedido.</p>
-                </div>
-                <div class="container-ativo">
-                    <h1>Onde está meu pedido?</h1>
-                    <p>Informações sobre o seu pedido.</p>
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>CBoleto está divergente da nota fiscal, o que eu faço ?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>É importante verificar se o pedido sofreu alguma modificação por conta de ruptura de estoque ou pesagem. Caso tenha sido, precisamos confirmar qual o valor correto e fazer o ajuste através do emissor de boleto no retool.
+
+                                Caso o boleto seja emitido por um de nossos parceiros enviar a NF ajustada de venda ou a nota de devolução e solicitar o ajuste do valor do boleto.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="delivery" class="content-item">
+
+            <div id="order" class="content-item">
+                <!-- Accordions para "Onde está meu pedido?" -->
                 <div class="container-ativo">
-                    <h1>Envios e entregas</h1>
-                    <p>Informações sobre envios e entregas.</p>
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Em que momento é feita a roteirização?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Atualmente, a roteirização acontece após as 19h.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Adicionando 10 novos accordions -->
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Posso pedir prioridade em uma entrega?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Hoje, não conseguimos priorizar uma entrega na roteirização ou durante a rota do motorista. A entrega só poderá ser feita de forma prioritária se não comprometer a rota do motorista. É ideal deixar o cliente ciente de que nosso horário de entrega é das 7h às 19h.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="container-ativo">
-                    <h1>Envios e entregas</h1>
-                    <p>Informações sobre envios e entregas.</p>
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>O cliente tem limite de horário. Como posso garantir a entrega nesse horário?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Ainda não conseguimos trabalhar com janela de horário na rota. Por isso, é importante esclarecer isso para o cliente, para que não se criem expectativas. Nosso horário de entrega é das 7h às 19h. Uma forma de deixar clara essa restrição de horário é colocando o limite de horário na observação do pedido, para que o motorista fique ciente. Embora não seja uma garantia, se estiver no romaneio do motorista, ele tentará organizar a rota para atender o cliente.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>O cliente quer o número do motorista. Posso passar?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Nossos motoristas são terceirizados, e por isso, o cliente deve tratar todos os assuntos diretamente com a Praso. O motorista pode, sim, entrar em contato com o cliente para pedir ajuda ou uma localização, mas nós não passamos o número do motorista para o cliente.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>O faturamento é feito antes da roteirização?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Sim, primeiro o pedido é faturado e, em seguida, roteirizado. Estamos implementando o faturamento automático para agilizar nossos processos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Quem roteiriza consegue ver as observações do pedido?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Não, as observações colocadas no pedido aparecem apenas no romaneio do motorista.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Em que momento o pessoal verifica que o item está em ruptura?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>As rupturas são verificadas no momento da separação do pedido. O pessoal do armazém utiliza um sistema colaborativo onde fazem ajustes de itens que estão em ruptura. Em casos assim, a NF original é automaticamente cancelada, e uma nova é emitida sem o item faltante, tudo isso antes de sair para a rota.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Como funciona o processo de agendamento de entregas?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Ao finalizar o pedido, o cliente deve selecionar a data em que deseja receber a entrega, desde que não seja domingo ou feriado nacional.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>O que acontece se o cliente não estiver disponível para receber a entrega?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Se o cliente não estiver disponível para receber o pedido, entraremos em contato para verificar se algum vizinho pode receber a entrega. Se isso não for possível, tentaremos realizar a entrega no próximo dia de entrega naquela região.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Quais são os horários de entrega da Praso?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Nossas entregas são realizadas entre 7h e 19h.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>A Praso realiza entregas aos domingos e feriados?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Atualmente, nossas entregas são realizadas de segunda a sábado, com exceção de feriados nacionais. Algumas regiões possuem restrições de entrega.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Como a Praso lida com devoluções de mercadorias?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>As devoluções são registradas no sistema após a solicitação do cliente ou vendedor. Em seguida, emitimos uma Nota Fiscal de Devolução e acionamos o time de operações para realizar a coleta dos itens.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="delivery" class="content-item">
+                <!-- Accordions para "Envios e entregas" -->
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>O cliente pode alterar o endereço pelo site ou aplicativo?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Não. Atualmente, ele não consegue fazer essa alteração pelo site ou aplicativo. É necessário entrar em contato com o nosso atendimento.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Adicionando 10 novos accordions -->
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>O cliente pode cancelar o pedido?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Sim, caso o pedido ainda não tenha sido faturado, o cliente pode realizar o cancelamento sozinho. Se essa opção não estiver mais disponível, isso significa que o pedido já foi faturado e está em processo de faturamento e roteirização. Nesse caso, o cliente deverá entrar em contato com o nosso atendimento.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>O cliente pode alterar o número de telefone pelo site ou aplicativo?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Não. Atualmente, ele não consegue fazer essa alteração pelo site ou aplicativo. É necessário entrar em contato com o nosso atendimento.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>O cliente consegue modificar um item depois de finalizada a compra?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Não. Atualmente, ele não consegue fazer essa modificação pelo site ou aplicativo. É necessário entrar em contato com o nosso atendimento. O pedido deverá ser cancelado e refeito.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Quais formas de pagamento para CNPJ?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Os pagamentos podem ser realizados via Pix, cartão de crédito e boleto a prazo.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Quais formas de pagamento para CPF?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Os pagamentos podem ser realizados via Pix e cartão de crédito.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Qual e-mail e telefone do suporte?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>"E-mail: suporte@praso.com.br</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-ativo">
+                    <div class="accordion">
+                        <button class="accordion-header">
+                            <span>Qual o prazo para o cliente reclamar sobre o item em seu pedido ?</span>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>O prazo para reclamação e arrependimento são de 7 dias ! </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

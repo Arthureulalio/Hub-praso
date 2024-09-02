@@ -4,11 +4,12 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    
+    height: 100vh; /* Ajustado para ocupar a tela inteira */
 }
 
 .container {
     display: flex;
+    width: 100%; /* Para garantir que o container ocupe toda a largura */
 }
 
 .sidebar {
@@ -16,12 +17,14 @@ body {
     background-color: #f3f4f5;
     padding: 20px;
     border-right: 1px solid #ddd;
-    height: 200vh;
+    height: 100vh; /* Ajustado para ocupar a altura da tela */
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura total */
 }
 
 .sidebar ul {
     list-style-type: none;
     padding: 0;
+    margin: 0; /* Removido o margin para alinhamento correto */
 }
 
 .sidebar ul li {
@@ -34,14 +37,16 @@ body {
 
 .sidebar ul li.active,
 .sidebar ul li:hover {
-    background-color: #00aaff;
+    background-color: #2f06c5;
     color: white;
 }
 
 .content {
     padding: 20px;
-    background-color: #1d6eb1;
-    width: 100%;
+    background-color: #22009c;
+    width: calc(100% - 250px); /* Garantir que o content ocupe o espaço restante ao lado da sidebar */
+    box-sizing: border-box;
+    overflow-y: auto; /* Adicionado para rolagem no conteúdo, se necessário */
 }
 
 .content-item {
@@ -59,6 +64,7 @@ body {
     padding: 16px 20px;
     box-sizing: border-box;
 }
+
 .accordion {
     border-bottom: 1px solid #d9e2ec;
     margin-bottom: 10px;
@@ -67,7 +73,7 @@ body {
 .accordion-header {
     width: 100%;
     padding: 15px;
-    background-color: #1e81b0; /* Mesmo tom de azul */
+    background-color: #1e81b0;
     color: #fff;
     border: none;
     outline: none;
