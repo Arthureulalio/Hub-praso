@@ -1,48 +1,13 @@
-function handleCfunction handleCredentialResponse(response) {
-    // Decodificar o JWT para obter os dados do usuário
-    const data = jwt_decode(response.credential);
+// Função de redirecionamento ao clicar no botão de login
+document.getElementById('loginButton').addEventListener('click', function() {
+    // Simular validação de login (opcional: aqui você pode validar o formulário antes de redirecionar)
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-    console.log(data);  // Exibir dados do usuário no console
-    alert(`Bem-vindo, ${data.name}!`);
-
-    // Redirecionar para a página home
-    window.location.href = "index.html";
-}
-
-window.onload = function () {
-    google.accounts.id.initialize({
-        client_id: 'SEU_CLIENT_ID.apps.googleusercontent.com',
-        callback: handleCredentialResponse
-    });
-
-    google.accounts.id.renderButton(
-        document.querySelector('.g_id_signin'), 
-        { theme: 'outline', size: 'large' }  // Personalize o botão
-    );
-
-    google.accounts.id.prompt(); // Exibe o prompt
-};
-redentialResponse(response) {
-    // Decodificar o JWT para obter os dados do usuário
-    const data = jwt_decode(response.credential);
-
-    console.log(data);  // Exibir dados do usuário no console
-    alert(`Bem-vindo, ${data.name}!`);
-
-    // Redirecionar para a página home
-    window.location.href = "index.html";
-}
-
-window.onload = function () {
-    google.accounts.id.initialize({
-        client_id: 'SEU_CLIENT_ID.apps.googleusercontent.com',
-        callback: handleCredentialResponse
-    });
-
-    google.accounts.id.renderButton(
-        document.querySelector('.g_id_signin'), 
-        { theme: 'outline', size: 'large' }  // Personalize o botão
-    );
-
-    google.accounts.id.prompt(); // Exibe o prompt
-};
+    if (email && password) {
+        // Redirecionar para a página home.html
+        window.location.href = "home.html";
+    } else {
+        alert('Por favor, insira o email e a senha.');
+    }
+});
